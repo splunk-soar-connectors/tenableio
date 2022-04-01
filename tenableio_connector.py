@@ -78,6 +78,7 @@ class TenableioConnector(BaseConnector):
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_list_policies(self, param):
+        self.debug('Start _handle_list_policies')
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         try:
@@ -88,11 +89,14 @@ class TenableioConnector(BaseConnector):
 
             summary = action_result.update_summary({})
             summary[TENABLE_IO_OUTPUT_POLICY_COUNT] = len(policies)
+
+            self.debug('End _handle_list_policies')
             return action_result.set_status(phantom.APP_SUCCESS)
         except:
             return action_result.set_status(phantom.APP_ERROR, TENABLE_IO_MESSAGE_LIST_POLICIES_FAILED)
 
     def _handle_list_scans(self, param):
+        self.debug('Start _handle_list_scans')
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         folder_id = param.get(TENABLE_IO_PARAM_FOLDER_ID)
@@ -109,6 +113,8 @@ class TenableioConnector(BaseConnector):
 
             summary = action_result.update_summary({})
             summary[TENABLE_IO_OUTPUT_SCAN_COUNT] = len(scans)
+
+            self.debug('End _handle_list_scans')
             return action_result.set_status(phantom.APP_SUCCESS)
         except (OverflowError, ParserError):
             return action_result.set_status(phantom.APP_ERROR, TENABLE_IO_MESSAGE_INVALID_DATETIME)
@@ -116,6 +122,7 @@ class TenableioConnector(BaseConnector):
             return action_result.set_status(phantom.APP_ERROR, TENABLE_IO_MESSAGE_LIST_SCANS_FAILED)
 
     def _handle_list_scanners(self, param):
+        self.debug('Start _handle_list_scanners')
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         try:
@@ -126,11 +133,14 @@ class TenableioConnector(BaseConnector):
 
             summary = action_result.update_summary({})
             summary[TENABLE_IO_OUTPUT_SCANNER_COUNT] = len(scanners)
+
+            self.debug('End _handle_list_scanners')
             return action_result.set_status(phantom.APP_SUCCESS)
         except:
             return action_result.set_status(phantom.APP_ERROR, TENABLE_IO_MESSAGE_LIST_SCANNERS_FAILED)
 
     def _handle_delete_scan(self, param):
+        self.debug('Start _handle_delete_scan')
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         try:
@@ -140,11 +150,13 @@ class TenableioConnector(BaseConnector):
             action_result.add_data({TENABLE_IO_OUTPUT_SCAN_ID: scan_id, TENABLE_IO_OUTPUT_DELETE_STATUS: True})
             summary = action_result.update_summary({})
             summary[TENABLE_IO_OUTPUT_DELETE_STATUS] = True
+
+            self.debug('End _handle_delete_scan')
             return action_result.set_status(phantom.APP_SUCCESS, TENABLE_IO_MESSAGE_DELETE_SCAN_COMPLETED)
         except:
             return action_result.set_status(phantom.APP_ERROR, TENABLE_IO_MESSAGE_DELETE_SCAN_FAILED)
 
-    def _handle_scan_endpoint(self, param):
+    def _handle_scan_host(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         try:
@@ -229,8 +241,8 @@ class TenableioConnector(BaseConnector):
         elif action_id == TENABLE_IO_ACTION_ID_LIST_POLICIES:
             ret_val = self._handle_list_policies(param)
         elif action_id == TENABLE_IO_ACTION_ID_SCAN_HOST:
-            # "action": "scan endpoint" -> "identifier": "scan_host" is a carry-over from original nessus app
-            ret_val = self._handle_scan_endpoint(param)
+            # Note: "action": "scan endpoint" -> "identifier": "scan_host" is a carry-over from original nessus app
+            ret_val = self._handle_scan_host(param)
         elif action_id == TENABLE_IO_ACTION_ID_DELETE_SCAN:
             ret_val = self._handle_delete_scan(param)
 
