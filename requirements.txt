@@ -1,0 +1,4 @@
+backoff==1.11.1
+pyTenable==1.4.4
+python-dateutil==2.8.2
+restfly==1.4.5
