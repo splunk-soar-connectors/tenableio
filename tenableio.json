@@ -11,17 +11,17 @@
     "fips_compliant": true,
     "product_version_regex": ".*",
     "publisher": "Splunk",
-    "license": "Copyright (c) Splunk, 2022",
+    "copyright": "Copyright (c) Splunk, 2022",
     "app_version": "1.0.0",
     "utctime_updated": "2022-03-16T23:24:15.813210Z",
     "package_name": "phantom_tenableio",
     "main_module": "tenableio_connector.py",
-    "min_phantom_version": "5.2.1.78411",
+    "min_phantom_version": "5.1.0",
     "app_wizard_version": "1.0.0",
     "configuration": {
         "access_key": {
             "description": "Access Key",
-            "data_type": "string",
+            "data_type": "password",
             "required": true,
             "order": 0
         },
@@ -37,7 +37,6 @@
             "action": "test connectivity",
             "identifier": "test_connectivity",
             "description": "Validate the asset configuration for connectivity using supplied configuration",
-            "verbose": "",
             "type": "test",
             "read_only": true,
             "parameters": {},
@@ -384,6 +383,20 @@
                     "example_values": [
                         "Scanner count: 1"
                     ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
                 }
             ],
             "versions": "EQ(*)"
@@ -533,7 +546,6 @@
             "action": "scan endpoint",
             "identifier": "scan_host",
             "description": "Scans a host using the selected scan policy ID",
-            "verbose": "",
             "type": "investigate",
             "read_only": true,
             "parameters": {
@@ -823,7 +835,6 @@
             "action": "delete scan",
             "identifier": "delete_scan",
             "description": "Deletes a scan",
-            "verbose": "",
             "type": "investigate",
             "read_only": false,
             "parameters": {
@@ -897,6 +908,20 @@
                     "example_values": [
                         "Delete Scan completed"
                     ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
                 }
             ],
             "versions": "EQ(*)"
@@ -946,7 +971,7 @@
             },
             {
                 "module": "python_dateutil",
-                "input_file": "wheels/shared/python_dateutil-2.8.2-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/python_dateutil-2.8.1-py2.py3-none-any.whl"
             },
             {
                 "module": "requests",
@@ -1022,7 +1047,7 @@
             },
             {
                 "module": "python_dateutil",
-                "input_file": "wheels/shared/python_dateutil-2.8.2-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/python_dateutil-2.8.1-py2.py3-none-any.whl"
             },
             {
                 "module": "requests",

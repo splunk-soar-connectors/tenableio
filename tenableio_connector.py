@@ -1,4 +1,18 @@
-# Python 3 Compatibility imports
+# File: tenableio_connector.py
+#
+# Copyright (c) 2022 Splunk Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software distributed under
+# the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+# either express or implied. See the License for the specific language governing permissions
+# and limitations under the License.
+
 from __future__ import print_function, unicode_literals
 
 import json
@@ -132,18 +146,6 @@ class TenableioConnector(BaseConnector):
 
     def _handle_scan_endpoint(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
-
-        # JD: TODO
-        # [X] readme.html? copy from nessus?
-        #     - nessus readme.html is not particularly valuable
-        #
-        # - release notes (initial release - mention replacing?)
-        # - anticipate static check failures
-        #     - debug statements
-        #     - licenses
-        # [X] create github repo. proposed: 'tenableio' (what is the process for bootstrapping? documented?)
-        #    - similar app with a dot in its name: https://github.com/splunk-soar-connectors/unshortenme
-        #    - Done: https://github.com/splunk-soar-connectors/tenableio
 
         try:
             # Create scan
