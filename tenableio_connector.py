@@ -31,12 +31,6 @@ from tenable.io import TenableIO
 from tenableio_consts import *
 
 
-class RetVal(tuple):
-
-    def __new__(cls, val1, val2=None):
-        return tuple.__new__(RetVal, (val1, val2))
-
-
 class TenableioConnector(BaseConnector):
 
     def __init__(self):
