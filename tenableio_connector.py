@@ -216,7 +216,8 @@ class TenableioConnector(BaseConnector):
             return action_result.set_status(phantom.APP_SUCCESS)
 
         except Exception as e:
-            return action_result.set_status(phantom.APP_ERROR, TENABLE_IO_MESSAGE_SCAN_ENDPOINT_FAILED, e)
+            message = ' '.join([TENABLE_IO_MESSAGE_SCAN_ENDPOINT_FAILED, str(e)])[:TENABLE_IO_MAX_ERROR_MESSAGE_LENGTH]
+            return action_result.set_status(phantom.APP_ERROR, message)
 
     def handle_action(self, param):
         ret_val = phantom.APP_SUCCESS

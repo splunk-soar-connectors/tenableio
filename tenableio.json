@@ -551,12 +551,12 @@
             "read_only": true,
             "parameters": {
                 "target_to_scan": {
-                    "description": "IP of host to scan",
+                    "description": "Target to scan",
                     "data_type": "string",
                     "order": 0,
                     "contains": [
                         "ip",
-                        "hostname"
+                        "host name"
                     ],
                     "required": true
                 },
@@ -619,7 +619,7 @@
                     ],
                     "contains": [
                         "ip",
-                        "hostname"
+                        "host name"
                     ]
                 },
                 {
