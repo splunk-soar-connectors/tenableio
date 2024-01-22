@@ -1,17 +1,17 @@
 [comment]: # "Auto-generated SOAR connector documentation"
-# Tenable\.io
+# Tenable.io
 
 Publisher: Splunk  
-Connector Version: 1\.0\.1  
+Connector Version: 1.0.2  
 Product Vendor: Tenable  
-Product Name: Tenable\.io  
-Product Version Supported (regex): "\.\*"  
-Minimum Product Version: 5\.2\.0  
+Product Name: Tenable.io  
+Product Version Supported (regex): ".\*"  
+Minimum Product Version: 5.2.0  
 
-This app integrates with the Tenable\.io API to provide endpoint\-based investigative actions
+This app integrates with the Tenable.io API to provide endpoint-based investigative actions
 
 [comment]: # " File: README.md"
-[comment]: # "  Copyright (c) 2022 Splunk Inc."
+[comment]: # "  Copyright (c) 2022-2024 Splunk Inc."
 [comment]: # "Licensed under the Apache License, Version 2.0 (the 'License');"
 [comment]: # "you may not use this file except in compliance with the License."
 [comment]: # "You may obtain a copy of the License at"
@@ -26,12 +26,12 @@ For more information about Tenable.io Scan Targets, please see their documentati
 
 
 ### Configuration Variables
-The below configuration variables are required for this Connector to operate.  These variables are specified when configuring a Tenable\.io asset in SOAR.
+The below configuration variables are required for this Connector to operate.  These variables are specified when configuring a Tenable.io asset in SOAR.
 
 VARIABLE | REQUIRED | TYPE | DESCRIPTION
 -------- | -------- | ---- | -----------
-**access\_key** |  required  | password | Access Key
-**secret\_key** |  required  | password | Secret Key
+**access_key** |  required  | password | Access Key
+**secret_key** |  required  | password | Secret Key
 
 ### Supported Actions  
 [test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration  
@@ -62,39 +62,39 @@ Read only: **True**
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
-**folder\_id** |  optional  | Only return scans within the folder with this ID | numeric |  `tenableio folder id` 
-**last\_modified** |  optional  | Only return scans that have been modified since the time specified | string | 
+**folder_id** |  optional  | Only return scans within the folder with this ID | numeric |  `tenableio folder id` 
+**last_modified** |  optional  | Only return scans that have been modified since the time specified | string | 
 
 #### Action Output
-DATA PATH | TYPE | CONTAINS
---------- | ---- | --------
-action\_result\.status | string | 
-action\_result\.parameter\.folder\_id | numeric |  `tenableio folder id` 
-action\_result\.parameter\.last\_modified | string | 
-action\_result\.data\.\*\.name | string | 
-action\_result\.data\.\*\.id | numeric |  `tenableio scan id` 
-action\_result\.data\.\*\.owner | string | 
-action\_result\.data\.\*\.enabled | boolean | 
-action\_result\.data\.\*\.creation\_date | numeric | 
-action\_result\.data\.\*\.last\_modification\_date | numeric | 
-action\_result\.data\.\*\.status | string | 
-action\_result\.data\.\*\.shared | boolean | 
-action\_result\.data\.\*\.template\_uuid | string | 
-action\_result\.data\.\*\.user\_permissions | numeric | 
-action\_result\.data\.\*\.read | boolean | 
-action\_result\.data\.\*\.type | boolean | 
-action\_result\.data\.\*\.uuid | string | 
-action\_result\.data\.\*\.legacy | boolean | 
-action\_result\.data\.\*\.control | boolean | 
-action\_result\.data\.\*\.policy\_id | numeric | 
-action\_result\.data\.\*\.permissions | numeric | 
-action\_result\.data\.\*\.wizard\_uuid | string | 
-action\_result\.data\.\*\.has\_triggers | boolean | 
-action\_result\.data\.\*\.schedule\_uuid | string | 
-action\_result\.summary\.scan\_count | numeric | 
-action\_result\.message | string | 
-summary\.total\_objects | numeric | 
-summary\.total\_objects\_successful | numeric |   
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.status | string |  |   success  failed 
+action_result.parameter.folder_id | numeric |  `tenableio folder id`  |   4 
+action_result.parameter.last_modified | string |  |   1648765291 
+action_result.data.\*.name | string |  |   Daily Scan 
+action_result.data.\*.id | numeric |  `tenableio scan id`  |   19 
+action_result.data.\*.owner | string |  |   user@email.com 
+action_result.data.\*.enabled | boolean |  |   True 
+action_result.data.\*.creation_date | numeric |  |   1500907246 
+action_result.data.\*.last_modification_date | numeric |  |   1500907264 
+action_result.data.\*.status | string |  |   aborted 
+action_result.data.\*.shared | boolean |  |   False 
+action_result.data.\*.template_uuid | string |  |   731a8e52-3ea6-a291-ec0a-d2ff0619c19d7bd788d6be818b65 
+action_result.data.\*.user_permissions | numeric |  |   128 
+action_result.data.\*.read | boolean |  |   True 
+action_result.data.\*.type | boolean |  |   remote 
+action_result.data.\*.uuid | string |  |   b669b82e-4a45-4bc5-9368-28da7d1b88f7 
+action_result.data.\*.legacy | boolean |  |   False 
+action_result.data.\*.control | boolean |  |   True 
+action_result.data.\*.policy_id | numeric |  |   18 
+action_result.data.\*.permissions | numeric |  |   128 
+action_result.data.\*.wizard_uuid | string |  |   731a8e52-3ea6-a291-ec0a-d2ff0619c19d7bd788d6be818b65 
+action_result.data.\*.has_triggers | boolean |  |   False 
+action_result.data.\*.schedule_uuid | string |  |   731a8e52-3ea6-a291-ec0a-d2ff0619c19d7bd788d6be818b65 
+action_result.summary.scan_count | numeric |  |   1 
+action_result.message | string |  |   Scan count: 19 
+summary.total_objects | numeric |  |   1 
+summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'list scanners'
 Retrieve list of scanners that the current user is allowed to use
@@ -106,19 +106,19 @@ Read only: **True**
 No parameters are required for this action
 
 #### Action Output
-DATA PATH | TYPE | CONTAINS
---------- | ---- | --------
-action\_result\.status | string | 
-action\_result\.data\.\*\.name | string | 
-action\_result\.data\.\*\.id | string |  `tenableio scanner id` 
-action\_result\.data\.\*\.type | string | 
-action\_result\.data\.\*\.linked | boolean | 
-action\_result\.data\.\*\.status | string | 
-action\_result\.data\.\*\.network\_name | string | 
-action\_result\.summary\.scanner\_count | numeric | 
-action\_result\.message | string | 
-summary\.total\_objects | numeric | 
-summary\.total\_objects\_successful | numeric |   
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.status | string |  |   success  failed 
+action_result.data.\*.name | string |  |   US West Cloud Scanners  Linked Scanner 1 
+action_result.data.\*.id | string |  `tenableio scanner id`  |   e3403fe5-7ef8-4504-8a08-f70a724f6e69 
+action_result.data.\*.type | string |  |   pool  managed  local 
+action_result.data.\*.linked | boolean |  |   True 
+action_result.data.\*.status | string |  |   on 
+action_result.data.\*.network_name | string |  |   Default 
+action_result.summary.scanner_count | numeric |  |   1 
+action_result.message | string |  |   Scanner count: 1 
+summary.total_objects | numeric |  |   1 
+summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'list policies'
 Retrieve the list of configured polcies
@@ -130,24 +130,24 @@ Read only: **True**
 No parameters are required for this action
 
 #### Action Output
-DATA PATH | TYPE | CONTAINS
---------- | ---- | --------
-action\_result\.status | string | 
-action\_result\.data\.\*\.name | string | 
-action\_result\.data\.\*\.id | numeric |  `tenableio policy id` 
-action\_result\.data\.\*\.creation\_date | numeric | 
-action\_result\.data\.\*\.last\_modification\_date | numeric | 
-action\_result\.data\.\*\.owner | string | 
-action\_result\.data\.\*\.shared | numeric | 
-action\_result\.data\.\*\.owner\_id | numeric | 
-action\_result\.data\.\*\.no\_target | boolean | 
-action\_result\.data\.\*\.visibility | string | 
-action\_result\.data\.\*\.description | string | 
-action\_result\.data\.\*\.template\_uuid | string | 
-action\_result\.summary\.policy\_count | numeric | 
-action\_result\.message | string | 
-summary\.total\_objects | numeric | 
-summary\.total\_objects\_successful | numeric |   
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.status | string |  |   success  failed 
+action_result.data.\*.name | string |  |   FIPS Policy 
+action_result.data.\*.id | numeric |  `tenableio policy id`  |   19 
+action_result.data.\*.creation_date | numeric |  |   1500907246 
+action_result.data.\*.last_modification_date | numeric |  |   1500907264 
+action_result.data.\*.owner | string |  |   user@email.com 
+action_result.data.\*.shared | numeric |  |   1 
+action_result.data.\*.owner_id | numeric |  |   2287310 
+action_result.data.\*.no_target | boolean |  |   False 
+action_result.data.\*.visibility | string |  |   shared 
+action_result.data.\*.description | string |  |   Policy for scanning 
+action_result.data.\*.template_uuid | string |  |   fb9cbabc-af67-109e-f023-1e0d926c9e5925eee7a0aa8a8bd1 
+action_result.summary.policy_count | numeric |  |   1 
+action_result.message | string |  |   Policy count: 1 
+summary.total_objects | numeric |  |   1 
+summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'scan endpoint'
 Scans a host using the selected scan policy ID
@@ -158,43 +158,43 @@ Read only: **True**
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
-**target\_to\_scan** |  required  | Target to scan | string |  `ip`  `host name` 
-**policy\_id** |  required  | ID of the scan policy to use | string |  `tenableio policy id` 
-**scan\_name** |  optional  | The name of the scan to create | string | 
-**scanner\_id** |  optional  | The scanner or scanner group uuid or name | string |  `tenableio scanner id` 
-**scan\_timeout** |  optional  | The time \(in seconds\) to wait for a scan to complete | numeric | 
+**target_to_scan** |  required  | Target to scan | string |  `ip`  `host name` 
+**policy_id** |  required  | ID of the scan policy to use | string |  `tenableio policy id` 
+**scan_name** |  optional  | The name of the scan to create | string | 
+**scanner_id** |  optional  | The scanner or scanner group uuid or name | string |  `tenableio scanner id` 
+**scan_timeout** |  optional  | The time (in seconds) to wait for a scan to complete | numeric | 
 
 #### Action Output
-DATA PATH | TYPE | CONTAINS
---------- | ---- | --------
-action\_result\.status | string | 
-action\_result\.parameter\.target\_to\_scan | string |  `ip`  `host name` 
-action\_result\.parameter\.policy\_id | string |  `tenableio policy id` 
-action\_result\.parameter\.scan\_name | string | 
-action\_result\.parameter\.scanner\_id | string |  `tenableio scanner id` 
-action\_result\.parameter\.scan\_timeout | numeric | 
-action\_result\.data\.\*\.hostname | string |  `ip`  `host name` 
-action\_result\.data\.\*\.score | numeric | 
-action\_result\.data\.\*\.low | numeric | 
-action\_result\.data\.\*\.medium | numeric | 
-action\_result\.data\.\*\.high | numeric | 
-action\_result\.data\.\*\.critical | numeric | 
-action\_result\.data\.\*\.host\_id | numeric | 
-action\_result\.data\.\*\.host\_index | numeric | 
-action\_result\.data\.\*\.info | numeric | 
-action\_result\.data\.\*\.numchecksconsidered | numeric | 
-action\_result\.data\.\*\.progress | string | 
-action\_result\.data\.\*\.scanprogresscurrent | numeric | 
-action\_result\.data\.\*\.scanprogresstotal | numeric | 
-action\_result\.data\.\*\.severity | numeric | 
-action\_result\.data\.\*\.severitycount\.item\.\*\.count | numeric | 
-action\_result\.data\.\*\.severitycount\.item\.\*\.severitylevel | numeric | 
-action\_result\.data\.\*\.totalchecksconsidered | numeric | 
-action\_result\.summary\.total\_vulns | numeric | 
-action\_result\.summary\.scan\_id | numeric |  `tenableio scan id` 
-action\_result\.message | string | 
-summary\.total\_objects | numeric | 
-summary\.total\_objects\_successful | numeric |   
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.status | string |  |   success  failed 
+action_result.parameter.target_to_scan | string |  `ip`  `host name`  |   172.16.54.130 
+action_result.parameter.policy_id | string |  `tenableio policy id`  |   4 
+action_result.parameter.scan_name | string |  |   Standard Scan 
+action_result.parameter.scanner_id | string |  `tenableio scanner id`  |   e3403fe5-7ef8-4504-8a08-f70a724f6e69 
+action_result.parameter.scan_timeout | numeric |  |   3600 
+action_result.data.\*.hostname | string |  `ip`  `host name`  |   172.16.54.130 
+action_result.data.\*.score | numeric |  |   14791 
+action_result.data.\*.low | numeric |  |   2 
+action_result.data.\*.medium | numeric |  |   7 
+action_result.data.\*.high | numeric |  |   4 
+action_result.data.\*.critical | numeric |  |   1 
+action_result.data.\*.host_id | numeric |  |   2 
+action_result.data.\*.host_index | numeric |  |   0 
+action_result.data.\*.info | numeric |  |   112 
+action_result.data.\*.numchecksconsidered | numeric |  |   100 
+action_result.data.\*.progress | string |  |   100-100/200-200 
+action_result.data.\*.scanprogresscurrent | numeric |  |   100 
+action_result.data.\*.scanprogresstotal | numeric |  |   100 
+action_result.data.\*.severity | numeric |  |   129 
+action_result.data.\*.severitycount.item.\*.count | numeric |  |   112 
+action_result.data.\*.severitycount.item.\*.severitylevel | numeric |  |   0 
+action_result.data.\*.totalchecksconsidered | numeric |  |   100 
+action_result.summary.total_vulns | numeric |  |   14 
+action_result.summary.scan_id | numeric |  `tenableio scan id`  |   14 
+action_result.message | string |  |   Total vulns: 14 
+summary.total_objects | numeric |  |   1 
+summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'delete scan'
 Deletes a scan
@@ -205,16 +205,16 @@ Read only: **False**
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
-**scan\_id** |  required  | The unique identifier for the scan | numeric |  `tenableio scan id` 
+**scan_id** |  required  | The unique identifier for the scan | numeric |  `tenableio scan id` 
 
 #### Action Output
-DATA PATH | TYPE | CONTAINS
---------- | ---- | --------
-action\_result\.status | string | 
-action\_result\.parameter\.scan\_id | numeric |  `tenableio scan id` 
-action\_result\.data\.\*\.scan\_id | numeric |  `tenableio scan id` 
-action\_result\.data\.\*\.delete\_status | boolean | 
-action\_result\.summary\.delete\_status | boolean | 
-action\_result\.message | string | 
-summary\.total\_objects | numeric | 
-summary\.total\_objects\_successful | numeric | 
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.status | string |  |   success  failed 
+action_result.parameter.scan_id | numeric |  `tenableio scan id`  |   14 
+action_result.data.\*.scan_id | numeric |  `tenableio scan id`  |   14 
+action_result.data.\*.delete_status | boolean |  |   True 
+action_result.summary.delete_status | boolean |  |   True 
+action_result.message | string |  |   Delete Scan completed 
+summary.total_objects | numeric |  |   1 
+summary.total_objects_successful | numeric |  |   1 
