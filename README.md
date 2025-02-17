@@ -4,7 +4,7 @@ Publisher: Splunk \
 Connector Version: 1.0.2 \
 Product Vendor: Tenable \
 Product Name: Tenable.io \
-Minimum Product Version: 5.2.0
+Minimum Product Version: 6.3.0
 
 This app integrates with the Tenable.io API to provide endpoint-based investigative actions
 
