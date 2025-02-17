@@ -1,6 +1,6 @@
 # File: tenableio_connector.py
 #
-# Copyright (c) 2022-2024 Splunk Inc.
+# Copyright (c) 2022-2025 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -55,8 +55,14 @@ class TenableioConnector(BaseConnector):
         except:
             pass
 
-        return action_result.set_status(phantom.APP_ERROR, TENABLE_IO_MESSAGE_INVALID_VALUE, None,
-            TENABLE_IO_PARAM_SCAN_TIMEOUT, TENABLE_IO_MIN_PARAM_SCAN_TIMEOUT, TENABLE_IO_MAX_PARAM_SCAN_TIMEOUT)
+        return action_result.set_status(
+            phantom.APP_ERROR,
+            TENABLE_IO_MESSAGE_INVALID_VALUE,
+            None,
+            TENABLE_IO_PARAM_SCAN_TIMEOUT,
+            TENABLE_IO_MIN_PARAM_SCAN_TIMEOUT,
+            TENABLE_IO_MAX_PARAM_SCAN_TIMEOUT,
+        )
 
     def _handle_test_connectivity(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
@@ -72,7 +78,7 @@ class TenableioConnector(BaseConnector):
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_list_policies(self, param):
-        self.debug_print('Start _handle_list_policies')
+        self.debug_print("Start _handle_list_policies")
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         try:
@@ -84,13 +90,13 @@ class TenableioConnector(BaseConnector):
             summary = action_result.update_summary({})
             summary[TENABLE_IO_OUTPUT_POLICY_COUNT] = len(policies)
 
-            self.debug_print('End _handle_list_policies')
+            self.debug_print("End _handle_list_policies")
             return action_result.set_status(phantom.APP_SUCCESS)
         except:
             return action_result.set_status(phantom.APP_ERROR, TENABLE_IO_MESSAGE_LIST_POLICIES_FAILED)
 
     def _handle_list_scans(self, param):
-        self.debug_print('Start _handle_list_scans')
+        self.debug_print("Start _handle_list_scans")
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         folder_id = param.get(TENABLE_IO_PARAM_FOLDER_ID)
@@ -108,7 +114,7 @@ class TenableioConnector(BaseConnector):
             summary = action_result.update_summary({})
             summary[TENABLE_IO_OUTPUT_SCAN_COUNT] = len(scans)
 
-            self.debug_print('End _handle_list_scans')
+            self.debug_print("End _handle_list_scans")
             return action_result.set_status(phantom.APP_SUCCESS)
         except (OverflowError, ParserError):
             return action_result.set_status(phantom.APP_ERROR, TENABLE_IO_MESSAGE_INVALID_DATETIME)
@@ -116,7 +122,7 @@ class TenableioConnector(BaseConnector):
             return action_result.set_status(phantom.APP_ERROR, TENABLE_IO_MESSAGE_LIST_SCANS_FAILED)
 
     def _handle_list_scanners(self, param):
-        self.debug_print('Start _handle_list_scanners')
+        self.debug_print("Start _handle_list_scanners")
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         try:
@@ -128,13 +134,13 @@ class TenableioConnector(BaseConnector):
             summary = action_result.update_summary({})
             summary[TENABLE_IO_OUTPUT_SCANNER_COUNT] = len(scanners)
 
-            self.debug_print('End _handle_list_scanners')
+            self.debug_print("End _handle_list_scanners")
             return action_result.set_status(phantom.APP_SUCCESS)
         except:
             return action_result.set_status(phantom.APP_ERROR, TENABLE_IO_MESSAGE_LIST_SCANNERS_FAILED)
 
     def _handle_delete_scan(self, param):
-        self.debug_print('Start _handle_delete_scan')
+        self.debug_print("Start _handle_delete_scan")
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         try:
@@ -145,7 +151,7 @@ class TenableioConnector(BaseConnector):
             summary = action_result.update_summary({})
             summary[TENABLE_IO_OUTPUT_DELETE_STATUS] = True
 
-            self.debug_print('End _handle_delete_scan')
+            self.debug_print("End _handle_delete_scan")
             return action_result.set_status(phantom.APP_SUCCESS, TENABLE_IO_MESSAGE_DELETE_SCAN_COMPLETED)
         except:
             return action_result.set_status(phantom.APP_ERROR, TENABLE_IO_MESSAGE_DELETE_SCAN_FAILED)
@@ -171,24 +177,26 @@ class TenableioConnector(BaseConnector):
             scan = self._client.scans.create(name=scan_name, policy=policy_id, targets=[target_to_scan], scanner=scanner_id)
 
             summary = action_result.update_summary({})
-            summary[TENABLE_IO_OUTPUT_SCAN_ID] = scan['id']
+            summary[TENABLE_IO_OUTPUT_SCAN_ID] = scan["id"]
 
             # Launch scan
-            self.save_progress(TENABLE_IO_MESSAGE_LAUNCHING_SCAN, target_to_scan, scan['id'])
-            scan_instance_uuid = self._client.scans.launch(scan['id'])
+            self.save_progress(TENABLE_IO_MESSAGE_LAUNCHING_SCAN, target_to_scan, scan["id"])
+            scan_instance_uuid = self._client.scans.launch(scan["id"])
 
             # Poll until scan status indicates complete or timeout
-            @backoff.on_exception(backoff.expo, errors.TooManyRequestsError,
-                                max_time=TENABLE_IO_DEFAULT_SCAN_STATUS_RATE_LIMITING_TIMEOUT)
-            @backoff.on_predicate(backoff.constant, lambda status: status not in TENABLE_IO_TERMINAL_SCAN_STATUS,
-                                interval=TENABLE_IO_DEFAULT_SCAN_STATUS_POLLING_INTERVAL,
-                                max_time=scan_timeout)
+            @backoff.on_exception(backoff.expo, errors.TooManyRequestsError, max_time=TENABLE_IO_DEFAULT_SCAN_STATUS_RATE_LIMITING_TIMEOUT)
+            @backoff.on_predicate(
+                backoff.constant,
+                lambda status: status not in TENABLE_IO_TERMINAL_SCAN_STATUS,
+                interval=TENABLE_IO_DEFAULT_SCAN_STATUS_POLLING_INTERVAL,
+                max_time=scan_timeout,
+            )
             def get_scan_status(scan_id):
                 status = self._client.scans.status(scan_id)
                 self.save_progress(TENABLE_IO_MESSAGE_WAITING_FOR_SCAN, status)
                 return status
 
-            scan_status = get_scan_status(scan['id'])
+            scan_status = get_scan_status(scan["id"])
             error_messages = []
             if scan_status == TENABLE_IO_SCAN_STATUS_COMPLETE:
                 self.save_progress(TENABLE_IO_MESSAGE_SCAN_COMPLETED)
@@ -196,9 +204,9 @@ class TenableioConnector(BaseConnector):
                 error_messages.append(TENABLE_IO_MESSAGE_SCAN_DID_NOT_COMPLETE.format(scan_timeout, scan_status))
 
             # Get scan details
-            self.save_progress(TENABLE_IO_MESSAGE_GETTING_SCAN_DETAILS, scan['id'], scan_instance_uuid)
-            scan_details = self._client.scans.results(scan['id'], None, scan_instance_uuid)
-            hosts = scan_details.get('hosts', [])
+            self.save_progress(TENABLE_IO_MESSAGE_GETTING_SCAN_DETAILS, scan["id"], scan_instance_uuid)
+            scan_details = self._client.scans.results(scan["id"], None, scan_instance_uuid)
+            hosts = scan_details.get("hosts", [])
 
             # Generate output
             if hosts:
@@ -211,12 +219,12 @@ class TenableioConnector(BaseConnector):
                 error_messages.append(TENABLE_IO_MESSAGE_SCAN_RESPONSE_IS_EMPTY)
 
             if error_messages:
-                return action_result.set_status(phantom.APP_ERROR, ' '.join(error_messages))
+                return action_result.set_status(phantom.APP_ERROR, " ".join(error_messages))
 
             return action_result.set_status(phantom.APP_SUCCESS)
 
         except Exception as e:
-            message = ' '.join([TENABLE_IO_MESSAGE_SCAN_ENDPOINT_FAILED, str(e)])[:TENABLE_IO_MAX_ERROR_MESSAGE_LENGTH]
+            message = " ".join([TENABLE_IO_MESSAGE_SCAN_ENDPOINT_FAILED, str(e)])[:TENABLE_IO_MAX_ERROR_MESSAGE_LENGTH]
             return action_result.set_status(phantom.APP_ERROR, message)
 
     def handle_action(self, param):
@@ -225,7 +233,7 @@ class TenableioConnector(BaseConnector):
         # Get the action that we are supposed to execute for this App Run
         action_id = self.get_action_identifier()
 
-        self.debug_print('action_id', self.get_action_identifier())
+        self.debug_print("action_id", self.get_action_identifier())
 
         if action_id == TENABLE_IO_ACTION_ID_TEST_CONNECTIVITY:
             ret_val = self._handle_test_connectivity(param)
@@ -278,10 +286,10 @@ def main():
 
     argparser = argparse.ArgumentParser()
 
-    argparser.add_argument('input_test_json', help='Input Test JSON file')
-    argparser.add_argument('-u', '--username', help='username', required=False)
-    argparser.add_argument('-p', '--password', help='password', required=False)
-    argparser.add_argument('-v', '--verify', action='store_true', help='verify', required=False, default=False)
+    argparser.add_argument("input_test_json", help="Input Test JSON file")
+    argparser.add_argument("-u", "--username", help="username", required=False)
+    argparser.add_argument("-p", "--password", help="password", required=False)
+    argparser.add_argument("-v", "--verify", action="store_true", help="verify", required=False, default=False)
 
     args = argparser.parse_args()
     session_id = None
@@ -294,30 +302,31 @@ def main():
 
         # User specified a username but not a password, so ask
         import getpass
-        password = getpass.getpass('Password: ')
+
+        password = getpass.getpass("Password: ")
 
     if username and password:
         try:
-            login_url = TenableioConnector._get_phantom_base_url() + '/login'
+            login_url = TenableioConnector._get_phantom_base_url() + "/login"
 
-            print('Accessing the Login page')
+            print("Accessing the Login page")
             r = requests.get(login_url, verify=verify, timeout=TENABLE_IO_DEFAULT_REQUEST_TIMEOUT)
-            csrftoken = r.cookies['csrftoken']
+            csrftoken = r.cookies["csrftoken"]
 
             data = dict()
-            data['username'] = username
-            data['password'] = password
-            data['csrfmiddlewaretoken'] = csrftoken
+            data["username"] = username
+            data["password"] = password
+            data["csrfmiddlewaretoken"] = csrftoken
 
             headers = dict()
-            headers['Cookie'] = 'csrftoken=' + csrftoken
-            headers['Referer'] = login_url
+            headers["Cookie"] = "csrftoken=" + csrftoken
+            headers["Referer"] = login_url
 
-            print('Logging into Platform to get the session id')
+            print("Logging into Platform to get the session id")
             r2 = requests.post(login_url, verify=verify, data=data, headers=headers, timeout=TENABLE_IO_DEFAULT_REQUEST_TIMEOUT)
-            session_id = r2.cookies['sessionid']
+            session_id = r2.cookies["sessionid"]
         except Exception as e:
-            print('Unable to get session id from the platform. Error: ' + str(e))
+            print("Unable to get session id from the platform. Error: " + str(e))
             sys.exit(1)
 
     with open(args.input_test_json) as f:
@@ -329,8 +338,8 @@ def main():
         connector.print_progress_message = True
 
         if session_id is not None:
-            in_json['user_session_token'] = session_id
-            connector._set_csrf_info(csrftoken, headers['Referer'])
+            in_json["user_session_token"] = session_id
+            connector._set_csrf_info(csrftoken, headers["Referer"])
 
         ret_val = connector._handle_action(json.dumps(in_json), None)
         print(json.dumps(json.loads(ret_val), indent=4))
@@ -338,5 +347,5 @@ def main():
     sys.exit(0)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

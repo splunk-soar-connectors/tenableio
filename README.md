@@ -11,7 +11,7 @@ Minimum Product Version: 5.2.0
 This app integrates with the Tenable.io API to provide endpoint-based investigative actions
 
 [comment]: # " File: README.md"
-[comment]: # "  Copyright (c) 2022-2024 Splunk Inc."
+[comment]: # "  Copyright (c) 2022-2025 Splunk Inc."
 [comment]: # "Licensed under the Apache License, Version 2.0 (the 'License');"
 [comment]: # "you may not use this file except in compliance with the License."
 [comment]: # "You may obtain a copy of the License at"
