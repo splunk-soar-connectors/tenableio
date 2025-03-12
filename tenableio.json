@@ -12,7 +12,7 @@
     "product_version_regex": ".*",
     "publisher": "Splunk",
     "license": "Copyright (c) 2022-2025 Splunk Inc.",
-    "app_version": "1.0.3",
+    "app_version": "1.0.4",
     "latest_tested_versions": [
         "Cloud, February 18th 2025"
     ],
@@ -969,6 +969,10 @@
                 "input_file": "wheels/shared/semver-2.13.0-py2.py3-none-any.whl"
             },
             {
+                "module": "toml",
+                "input_file": "wheels/shared/toml-0.10.2-py2.py3-none-any.whl"
+            },
+            {
                 "module": "typing_extensions",
                 "input_file": "wheels/py3/typing_extensions-4.1.1-py3-none-any.whl"
             }
@@ -1011,6 +1015,10 @@
             {
                 "module": "semver",
                 "input_file": "wheels/py3/semver-3.0.4-py3-none-any.whl"
+            },
+            {
+                "module": "toml",
+                "input_file": "wheels/shared/toml-0.10.2-py2.py3-none-any.whl"
             },
             {
                 "module": "types_python_dateutil",
