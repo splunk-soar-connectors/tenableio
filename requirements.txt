@@ -2,3 +2,4 @@ backoff==1.11.1
 pyTenable==1.4.4
 python-dateutil==2.8.1
 restfly==1.4.5
+toml==0.10.2
