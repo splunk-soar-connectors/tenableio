@@ -13,7 +13,6 @@
 # either express or implied. See the License for the specific language governing permissions
 # and limitations under the License.
 
-from __future__ import print_function, unicode_literals
 
 import json
 from datetime import datetime, timezone
@@ -21,8 +20,7 @@ from datetime import datetime, timezone
 import backoff
 import phantom.app as phantom
 import requests
-from dateutil.parser import ParserError
-from dateutil.parser import parse as dateutil_parse
+from dateutil.parser import ParserError, parse as dateutil_parse
 from phantom.action_result import ActionResult
 from phantom.base_connector import BaseConnector
 from restfly import errors
@@ -32,11 +30,9 @@ from tenableio_consts import *
 
 
 class TenableioConnector(BaseConnector):
-
     def __init__(self):
-
         # Call the BaseConnectors init first
-        super(TenableioConnector, self).__init__()
+        super().__init__()
 
         self._state = None
 
@@ -299,7 +295,6 @@ def main():
     verify = args.verify
 
     if username is not None and password is None:
-
         # User specified a username but not a password, so ask
         import getpass
 
