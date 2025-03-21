@@ -1,7 +1,7 @@
 # Tenable.io
 
 Publisher: Splunk \
-Connector Version: 1.0.3 \
+Connector Version: 1.0.4 \
 Product Vendor: Tenable \
 Product Name: Tenable.io \
 Minimum Product Version: 6.3.0
