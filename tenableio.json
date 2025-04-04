@@ -12,9 +12,9 @@
     "product_version_regex": ".*",
     "publisher": "Splunk",
     "license": "Copyright (c) 2022-2025 Splunk Inc.",
-    "app_version": "1.0.4",
+    "app_version": "1.0.3",
     "latest_tested_versions": [
-        "Cloud, February 18th 2025"
+        "Cloud, April 4th 2025"
     ],
     "utctime_updated": "2022-03-16T23:24:15.813210Z",
     "package_name": "phantom_tenableio",
