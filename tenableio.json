@@ -946,11 +946,7 @@
             },
             {
                 "module": "marshmallow",
-                "input_file": "wheels/py3/marshmallow-3.26.1-py3-none-any.whl"
-            },
-            {
-                "module": "packaging",
-                "input_file": "wheels/py3/packaging-24.2-py3-none-any.whl"
+                "input_file": "wheels/py3/marshmallow-4.0.0-py3-none-any.whl"
             },
             {
                 "module": "pytenable",
@@ -993,16 +989,16 @@
                 "input_file": "wheels/shared/backoff-1.11.1-py2.py3-none-any.whl"
             },
             {
+                "module": "backports_datetime_fromisoformat",
+                "input_file": "wheels/py39/backports_datetime_fromisoformat-2.0.3-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
+            },
+            {
                 "module": "defusedxml",
                 "input_file": "wheels/shared/defusedxml-0.7.1-py2.py3-none-any.whl"
             },
             {
                 "module": "marshmallow",
-                "input_file": "wheels/py3/marshmallow-3.26.1-py3-none-any.whl"
-            },
-            {
-                "module": "packaging",
-                "input_file": "wheels/py3/packaging-24.2-py3-none-any.whl"
+                "input_file": "wheels/py3/marshmallow-4.0.0-py3-none-any.whl"
             },
             {
                 "module": "pytenable",
