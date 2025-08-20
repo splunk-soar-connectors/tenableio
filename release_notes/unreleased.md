@@ -1,3 +1,3 @@
 **Unreleased**
 
-* chore(ci): update pre-commit config
+* Added toml library [PAPP-35441]
