@@ -1,9 +1,9 @@
 # Tenable.io
 
-Publisher: Splunk \
-Connector Version: 1.0.3 \
-Product Vendor: Tenable \
-Product Name: Tenable.io \
+Publisher: Splunk <br>
+Connector Version: 1.0.3 <br>
+Product Vendor: Tenable <br>
+Product Name: Tenable.io <br>
 Minimum Product Version: 6.3.0
 
 This app integrates with the Tenable.io API to provide endpoint-based investigative actions
@@ -22,18 +22,18 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 
 ### Supported Actions
 
-[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration \
-[list scans](#action-list-scans) - Retrieve the list of configured scans \
-[list scanners](#action-list-scanners) - Retrieve list of scanners that the current user is allowed to use \
-[list policies](#action-list-policies) - Retrieve the list of configured polcies \
-[scan endpoint](#action-scan-endpoint) - Scans a host using the selected scan policy ID \
+[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration <br>
+[list scans](#action-list-scans) - Retrieve the list of configured scans <br>
+[list scanners](#action-list-scanners) - Retrieve list of scanners that the current user is allowed to use <br>
+[list policies](#action-list-policies) - Retrieve the list of configured polcies <br>
+[scan endpoint](#action-scan-endpoint) - Scans a host using the selected scan policy ID <br>
 [delete scan](#action-delete-scan) - Deletes a scan
 
 ## action: 'test connectivity'
 
 Validate the asset configuration for connectivity using supplied configuration
 
-Type: **test** \
+Type: **test** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -48,7 +48,7 @@ No Output
 
 Retrieve the list of configured scans
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -94,7 +94,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Retrieve list of scanners that the current user is allowed to use
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -121,7 +121,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Retrieve the list of configured polcies
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -153,7 +153,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Scans a host using the selected scan policy ID
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -203,7 +203,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Deletes a scan
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **False**
 
 #### Action Parameters
