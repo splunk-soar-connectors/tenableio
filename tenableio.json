@@ -12,11 +12,11 @@
     "product_version_regex": ".*",
     "publisher": "Splunk",
     "license": "Copyright (c) 2022-2025 Splunk Inc.",
-    "app_version": "1.0.4",
+    "app_version": "1.0.5",
     "latest_tested_versions": [
         "Cloud, April 4th 2025"
     ],
-    "utctime_updated": "2025-09-22T20:04:18.752165Z",
+    "utctime_updated": "2025-09-24T16:16:02.479167Z",
     "package_name": "phantom_tenableio",
     "main_module": "tenableio_connector.py",
     "min_phantom_version": "6.3.0",
