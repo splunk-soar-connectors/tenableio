@@ -1,3 +1,1 @@
 **Unreleased**
-
-* Reports vulnerability totals across every host returned by a Tenable.io scan.
