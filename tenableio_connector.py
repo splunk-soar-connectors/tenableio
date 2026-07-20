@@ -1,6 +1,6 @@
 # File: tenableio_connector.py
 #
-# Copyright (c) 2022-2025 Splunk Inc.
+# Copyright (c) 2022-2026 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -209,8 +209,9 @@ class TenableioConnector(BaseConnector):
                 for host in hosts:
                     action_result.add_data(host)
 
-                last_host = hosts[-1]
-                summary[TENABLE_IO_OUTPUT_TOTAL_VULNS] = sum([last_host[sev] for sev in TENABLE_IO_VULNERABILITY_SEVERITIES_FOR_SUMMARY])
+                summary[TENABLE_IO_OUTPUT_TOTAL_VULNS] = sum(
+                    host[severity] for host in hosts for severity in TENABLE_IO_VULNERABILITY_SEVERITIES_FOR_SUMMARY
+                )
             else:
                 error_messages.append(TENABLE_IO_MESSAGE_SCAN_RESPONSE_IS_EMPTY)
 
