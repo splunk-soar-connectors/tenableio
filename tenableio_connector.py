@@ -16,6 +16,7 @@
 
 import json
 from datetime import datetime, timezone
+from urllib.parse import quote
 
 import backoff
 import phantom.app as phantom
@@ -141,7 +142,10 @@ class TenableioConnector(BaseConnector):
 
         try:
             scan_id = param[TENABLE_IO_PARAM_SCAN_ID]
-            self._client.scans.delete(scan_id)
+            encoded_scan_id = quote(str(scan_id), safe="")
+            if encoded_scan_id in {"", ".", ".."}:
+                raise ValueError
+            self._client.scans.delete(encoded_scan_id)
 
             action_result.add_data({TENABLE_IO_OUTPUT_SCAN_ID: scan_id, TENABLE_IO_OUTPUT_DELETE_STATUS: True})
             summary = action_result.update_summary({})
