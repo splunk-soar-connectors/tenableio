@@ -7,3 +7,5 @@
 * Returns a successful empty result when Tenable.io reports no matching scans.
 
 * Returns a successful empty result when Tenable.io reports no custom policies.
+
+* Stops launched scans when scan endpoint actions time out or fail before completion.
