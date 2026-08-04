@@ -39,10 +39,14 @@ class TenableioConnector(BaseConnector):
 
     @staticmethod
     def _parse_datetime(value):
+        # pyTenable converts this value with time.mktime, which interprets it as host-local time.
         if value.isdigit():
-            return datetime.fromtimestamp(int(value), timezone.utc)
+            return datetime.fromtimestamp(int(value), timezone.utc).astimezone()
 
-        return dateutil_parse(value)
+        parsed = dateutil_parse(value)
+        if parsed.tzinfo is not None:
+            return parsed.astimezone()
+        return parsed
 
     @staticmethod
     def _validate_scan_timeout(action_result, value):
