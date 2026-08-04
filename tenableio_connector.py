@@ -83,7 +83,7 @@ class TenableioConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         try:
-            policies = self._client.policies.list()
+            policies = self._client.policies.list() or []
 
             for curr_item in policies:
                 action_result.add_data(curr_item)
