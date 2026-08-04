@@ -107,7 +107,7 @@ class TenableioConnector(BaseConnector):
             if last_modified:
                 last_modified = self._parse_datetime(last_modified)
 
-            scans = self._client.scans.list(folder_id, last_modified)
+            scans = self._client.scans.list(folder_id, last_modified) or []
 
             for curr_item in scans:
                 action_result.add_data(curr_item)
