@@ -51,6 +51,7 @@ TENABLE_IO_MESSAGE_SCAN_RESPONSE_IS_EMPTY = "Response is empty. Please check the
 TENABLE_IO_MESSAGE_SCAN_COMPLETED = "Scan completed"
 TENABLE_IO_MESSAGE_GETTING_SCAN_DETAILS = "Getting details for scan {} using scan instance {}"
 TENABLE_IO_MESSAGE_SCAN_ENDPOINT_FAILED = "Scan Endpoint Failed"
+TENABLE_IO_MESSAGE_STOPPING_SCAN = "Stopping abandoned scan {}"
 TENABLE_IO_MESSAGE_DELETE_SCAN_COMPLETED = "Delete Scan completed"
 TENABLE_IO_MESSAGE_DELETE_SCAN_FAILED = "Delete Scan Failed."
 

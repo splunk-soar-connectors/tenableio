@@ -16,6 +16,7 @@
 
 import json
 from datetime import datetime, timezone
+from urllib.parse import quote
 
 import backoff
 import phantom.app as phantom
@@ -38,10 +39,14 @@ class TenableioConnector(BaseConnector):
 
     @staticmethod
     def _parse_datetime(value):
+        # pyTenable converts this value with time.mktime, which interprets it as host-local time.
         if value.isdigit():
-            return datetime.fromtimestamp(int(value), timezone.utc)
+            return datetime.fromtimestamp(int(value), timezone.utc).astimezone()
 
-        return dateutil_parse(value)
+        parsed = dateutil_parse(value)
+        if parsed.tzinfo is not None:
+            return parsed.astimezone()
+        return parsed
 
     @staticmethod
     def _validate_scan_timeout(action_result, value):
@@ -78,7 +83,7 @@ class TenableioConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         try:
-            policies = self._client.policies.list()
+            policies = self._client.policies.list() or []
 
             for curr_item in policies:
                 action_result.add_data(curr_item)
@@ -102,7 +107,7 @@ class TenableioConnector(BaseConnector):
             if last_modified:
                 last_modified = self._parse_datetime(last_modified)
 
-            scans = self._client.scans.list(folder_id, last_modified)
+            scans = self._client.scans.list(folder_id, last_modified) or []
 
             for curr_item in scans:
                 action_result.add_data(curr_item)
@@ -141,7 +146,10 @@ class TenableioConnector(BaseConnector):
 
         try:
             scan_id = param[TENABLE_IO_PARAM_SCAN_ID]
-            self._client.scans.delete(scan_id)
+            encoded_scan_id = quote(str(scan_id), safe="")
+            if encoded_scan_id in {"", ".", ".."}:
+                raise ValueError
+            self._client.scans.delete(encoded_scan_id)
 
             action_result.add_data({TENABLE_IO_OUTPUT_SCAN_ID: scan_id, TENABLE_IO_OUTPUT_DELETE_STATUS: True})
             summary = action_result.update_summary({})
@@ -152,8 +160,16 @@ class TenableioConnector(BaseConnector):
         except:
             return action_result.set_status(phantom.APP_ERROR, TENABLE_IO_MESSAGE_DELETE_SCAN_FAILED)
 
+    def _stop_abandoned_scan(self, scan_id):
+        try:
+            self.save_progress(TENABLE_IO_MESSAGE_STOPPING_SCAN, scan_id)
+            self._client.scans.stop(scan_id)
+        except Exception as ex:
+            self.debug_print(f"Failed to stop abandoned scan {scan_id}: {ex}")
+
     def _handle_scan_host(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
+        launched_scan_id = None
 
         try:
             # Create scan
@@ -178,6 +194,7 @@ class TenableioConnector(BaseConnector):
             # Launch scan
             self.save_progress(TENABLE_IO_MESSAGE_LAUNCHING_SCAN, target_to_scan, scan["id"])
             scan_instance_uuid = self._client.scans.launch(scan["id"])
+            launched_scan_id = scan["id"]
 
             # Poll until scan status indicates complete or timeout
             @backoff.on_exception(backoff.expo, errors.TooManyRequestsError, max_time=TENABLE_IO_DEFAULT_SCAN_STATUS_RATE_LIMITING_TIMEOUT)
@@ -193,11 +210,17 @@ class TenableioConnector(BaseConnector):
                 return status
 
             scan_status = get_scan_status(scan["id"])
+            if scan_status in TENABLE_IO_TERMINAL_SCAN_STATUS:
+                launched_scan_id = None
+
             error_messages = []
             if scan_status == TENABLE_IO_SCAN_STATUS_COMPLETE:
                 self.save_progress(TENABLE_IO_MESSAGE_SCAN_COMPLETED)
             else:
                 error_messages.append(TENABLE_IO_MESSAGE_SCAN_DID_NOT_COMPLETE.format(scan_timeout, scan_status))
+                if launched_scan_id is not None:
+                    self._stop_abandoned_scan(launched_scan_id)
+                    launched_scan_id = None
 
             # Get scan details
             self.save_progress(TENABLE_IO_MESSAGE_GETTING_SCAN_DETAILS, scan["id"], scan_instance_uuid)
@@ -221,6 +244,8 @@ class TenableioConnector(BaseConnector):
             return action_result.set_status(phantom.APP_SUCCESS)
 
         except Exception as e:
+            if launched_scan_id is not None:
+                self._stop_abandoned_scan(launched_scan_id)
             message = " ".join([TENABLE_IO_MESSAGE_SCAN_ENDPOINT_FAILED, str(e)])[:TENABLE_IO_MAX_ERROR_MESSAGE_LENGTH]
             return action_result.set_status(phantom.APP_ERROR, message)
 
